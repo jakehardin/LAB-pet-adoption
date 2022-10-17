@@ -1,0 +1,15 @@
+.card-body{
+  display: flex;
+  margin: 100px;
+  flex-direction: column;
+  border: 100px;
+}
+
+.card-header{
+ font-size:xx-large;
+ text-align: center;
+}
+
+.btn-1{
+ color: red;
+}
