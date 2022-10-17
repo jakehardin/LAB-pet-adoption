@@ -240,3 +240,73 @@ const pets = [
       imageUrl: "http://lsae2.iypcdn.com/static//modules/uploads/photos/language1/dino-live-22.jpg?119"
     }
   ];
+  console.log("I'm here!")
+  console.log("Still trying!")
+
+  const app = document.querySelector("#app");
+
+  for (let i = 0; i < pets.length; i++) {
+    app.innerHTML += 
+    `<div class="card-text-center">
+  <div class="card-header">
+    ${pets[i].name}
+  </div>
+  <div class="card-body">
+    <img src= ${pets[i].imageUrl} alt="Picture of pet">
+    <p class="card-text">${pets[i].color}</p>
+    <p>${pets[i].specialSkill}</p>
+    <a href="#" class="btn btn-primary">${pets[i].type}</a>
+ </div>
+  </div>`
+  }
+
+ const renderToDom = (divId, htmlToRender) => {
+  const selectedDiv = document.querySelector(divId);
+  selectedDiv.innerHTML = htmlToRender;
+};
+
+const cardsOnDom = (array) => {
+  let domString = "";
+  for (const member of array) {
+    domString += `<div class="card" style="width: 18rem;">
+    <img src="${member.imageUrl}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <p class="card-text">${member.type}</p>
+    </div>
+  </div>`;
+  }
+
+  renderToDom("#app", domString);
+}
+
+  const filter = (array, typeString) => {
+    const typeArray = [];
+  
+     array.forEach((item) => {
+       if (item.type === typeString) {
+         typeArray.push(item);
+       }
+     });
+  
+    for (const member of array) {
+      if (pets.type === typeString) {
+        typeArray.push(member);
+      }
+    }
+  
+    return typeArray;
+  }
+
+const showDogsButton = document.querySelector("#Cats");
+const showCatsButton = document.querySelector("#Dogs");
+
+
+showDogsButton.addEventListener('click', () => {
+  const dogOwners = filter(pets, 'dog');
+  app.innerHTML(dogOwners);
+});
+
+showCatsButton.addEventListener('click', () => {
+  const catOwners = filter(pets, 'cat');
+  app.innerHTML(catOwners);
+});
