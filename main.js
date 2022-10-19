@@ -93,7 +93,7 @@ const pets = [
     color: "Green",
     specialSkill: "Respects pronouns.",
     type: "dog",
-    imageUrl: "https://img.designswan.com/2020/10/dogCostume/6.jpg"
+    imageUrl: "https://hips.hearstapps.com/clv.h-cdn.co/assets/17/34/4000x2661/gettyimages-831453282_super_1.jpg?resize=768:*"
   },
   {
     id: 13,
@@ -250,7 +250,7 @@ const pets = [
          ${pets[i].name}
        </div>
    <div class="card-body">
-     <img src=${pets[i].imageUrl} alt="Picture of pet for adoption">
+     <img class="img" src=${pets[i].imageUrl} alt="Picture of pet">
      <p class="card-text">${pets[i].color}</p>
      <p>${pets[i].specialSkill}</p>
      <a href="#" class="btn btn-primary">${pets[i].type}</a>
@@ -267,16 +267,17 @@ const petsOnDom = (array) => {
 let domString = "";
 for (const animal of array) {
   domString += `<div class="card text-center">
-           <div class="card-header">
+       <div class="card-header">
              ${animal.name}
-           </div>
-       <div class="card-body">
-         <img src=${animal.imageUrl} alt="Picture of pet for adoption">
-         <p class="card-text">${animal.color}</p>
-         <p>${animal.specialSkill}</p>
+        </div>
+    <div class="card-body">
+         <img class="img" src=${animal.imageUrl} alt="Picture of pet for adoption">
+       <p class="card-text">${animal.color}</p>
+        <p>${animal.specialSkill}</p>
          <a href="#" class="btn btn-primary">${animal.type}</a>
-       </div>
-     </div>`;
+         <button class="btn btn-danger" id="delete--${animal.id}">Delete</button>
+    </div>
+  </div>`;
 }
 
 renderToDom("#app", domString);
@@ -296,23 +297,26 @@ return petTypeArray;
 }
 
 const allPetsButton = document.querySelector("#all-button");
-const catsButton = document.querySelector("#cat-button");
+
 const dogsButton = document.querySelector("#dog-button");
+
+const catsButton = document.querySelector("#cat-button");
+
 const dinosButton = document.querySelector("#dino-button");
 
 allPetsButton.addEventListener('click', () => {
-petsOnDom(pets);
-});
-
-catsButton.addEventListener('click', () => {
-const petsAreCats = filter(pets, 'cat');
-petsOnDom(petsAreCats);
-});
+  petsOnDom(pets);
+  });
 
 dogsButton.addEventListener('click', () => {
-const petsAreDogs = filter(pets, 'dog');
-petsOnDom(petsAreDogs);
-});
+  const petsAreDogs = filter(pets, 'dog');
+  petsOnDom(petsAreDogs);
+  });
+
+catsButton.addEventListener('click', () => {
+  const petsAreCats = filter(pets, 'cat');
+  petsOnDom(petsAreCats);
+  });
 
 dinosButton.addEventListener('click', () => {
 const petsAreDinos = filter(pets, 'dino');
@@ -339,10 +343,29 @@ const createPet = (e) => {
 
 form.addEventListener('submit', createPet);
 
+
+
+
+
+
+
+app.addEventListener('click', (e) => {
+  // 3. check e.target.id includes "delete"
+  if (e.target.id.includes("delete")) {
+    const [, id] = e.target.id.split("--");
+
+    // 4. add logic to remove from array
+    const index = pets.findIndex(e => e.id === Number(id));
+    pets.splice(index, 1);
+
+    // 5. Repaint the DOM wiconst app = document.querySelector("#app");th the updated array
+    petsOnDom(pets);
+  }
+});
+
 const startApp = () => {
   petsOnDom(pets);
-   events(); // ALWAYS LAST
+  events(); // ALWAYS LAST
 }
-
 
 startApp();
